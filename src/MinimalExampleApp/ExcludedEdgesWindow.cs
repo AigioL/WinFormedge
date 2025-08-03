@@ -32,7 +32,7 @@ internal class ExcludedEdgesWindow : Formedge
 
     private void ExcludedEdgesWindow_WebMessageReceived(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)
     {
-        if(e.WebMessageAsJson == "\"ExperienceClicked\"")
+        if (e.WebMessageAsJson == "\"ExperienceClicked\"")
         {
             var ps = new System.Diagnostics.ProcessStartInfo("https://github.com/XuanchenLin/WinFormedge")
             {
@@ -41,11 +41,11 @@ internal class ExcludedEdgesWindow : Formedge
             };
             System.Diagnostics.Process.Start(ps);
 
-            
+
         }
     }
 
-    protected override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
+    protected internal override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
     {
         var win = opts.UseDefaultWindow();
 
@@ -60,7 +60,7 @@ internal class ExcludedEdgesWindow : Formedge
 
     private void ExcludedEdgesWindow_Load(object? sender, EventArgs e)
     {
-        
+
     }
 
 

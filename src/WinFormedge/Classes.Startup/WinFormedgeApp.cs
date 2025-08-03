@@ -275,7 +275,11 @@ public class WinFormedgeApp
             }
         }
 
+#if USE_WINRT
+        _environment = CoreWebView2Environment.CreateWithOptionsAsync(BrowserExecutablePath, UserDataFolder, opts).GetAwaiter().GetResult();
+#else
         _environment = CoreWebView2Environment.CreateAsync(BrowserExecutablePath, UserDataFolder, opts).GetAwaiter().GetResult();
+#endif
 
 
         var startup = Startup?.OnApplicationStartup(new StartupSettings());

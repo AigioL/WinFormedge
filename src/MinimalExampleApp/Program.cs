@@ -10,7 +10,7 @@ internal static class Program
     ///  The main entry point for the application.
     /// </summary>
     [STAThread]
-    static void Main()
+    internal static void Main(string[] args)
     {
 
         ApplicationConfiguration.Initialize();

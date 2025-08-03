@@ -33,7 +33,7 @@ internal class StartupWindow : Formedge
         });
     }
 
-    protected override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
+    protected internal override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
     {
         var settings = opts.UseDefaultWindow();
 

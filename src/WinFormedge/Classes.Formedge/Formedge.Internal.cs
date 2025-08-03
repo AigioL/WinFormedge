@@ -796,7 +796,11 @@ public abstract partial class Formedge : IDisposable
         var controller = WebView.Controller;
         var webview = WebView.Browser;
 
+#if USE_WINRT
+        controller.DefaultBackgroundColor = BackColor.ToWindowsColor();
+#else
         controller.DefaultBackgroundColor = BackColor;
+#endif
 
         WebView.ConfigureSettings += ConfigureWebView2Settings;
 
@@ -826,7 +830,7 @@ public abstract partial class Formedge : IDisposable
 
         _setVirtualHostNameToFolderMapping?.Invoke();
 
-        var script = Properties.Resources.Formedge;
+        var script = global::WinFormedge.Properties.Resources.Formedge;
 
         var version = typeof(Formedge).Assembly.GetName().Version?.ToString() ?? webview.Environment.BrowserVersionString;
 

@@ -32,7 +32,7 @@ internal class FeaturesWindow : Formedge
         //Url = "https://www.douyin.com";
     }
 
-    protected override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
+    protected internal override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
     {
         var win = opts.UseDefaultWindow();
 

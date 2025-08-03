@@ -102,7 +102,12 @@ public partial class Formedge
         {
             if (WebView.Initialized)
             {
+#if USE_WINRT
+                _defaultBackgroundColor = value;
+                WebView.Controller.DefaultBackgroundColor = value.ToWindowsColor();
+#else
                 _defaultBackgroundColor = WebView.Controller.DefaultBackgroundColor = value;
+#endif
             }
             else
             {
@@ -134,7 +139,19 @@ public partial class Formedge
     /// <returns>A task that represents the asynchronous operation. The task result contains the script result as a JSON-encoded string.</returns>
     public Task<string> ExecuteScriptAsync(string script)
     {
+#if USE_WINRT
+        var coreWebView2 = CoreWebView2;
+        if (coreWebView2 == null)
+        {
+            return Task.FromResult(string.Empty);
+        }
+        else
+        {
+            return coreWebView2.ExecuteScriptAsync(script).AsTask();
+        }
+#else
         return CoreWebView2?.ExecuteScriptAsync(script) ?? Task.FromResult<string>(string.Empty);
+#endif
     }
 
     /// <summary>

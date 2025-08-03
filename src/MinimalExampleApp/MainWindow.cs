@@ -48,7 +48,7 @@ public class MainWindow : Formedge
         };
     }
 
-    protected override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
+    protected internal override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
     {
         var win = opts.UseDefaultWindow();
         MinimumSize = new Size(1024, 640);
@@ -91,7 +91,7 @@ public class MainWindowJsObject
                 DefaultFolderName = "wwwroot"
             });
         }
-        protected override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
+        protected internal override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
         {
             var settings = opts.UseKisokWindow();
             settings.Resizable = false;
@@ -298,7 +298,7 @@ public class MainWindowJsObject
             });
         }
 
-        protected override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
+        protected internal override WindowSettings ConfigureWindowSettings(HostWindowBuilder opts)
         {
             var settings = opts.UseDefaultWindow();
             settings.ExtendsContentIntoTitleBar = _style == WindowStyle.ExtendsContentIntoTitlebar || _style == WindowStyle.NonDecorated;

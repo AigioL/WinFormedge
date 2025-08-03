@@ -232,8 +232,13 @@ internal partial class WebViewCore
         }
 
         controller.ShouldDetectMonitorScaleChanges = true;
+#if USE_WINRT
+        controller.SetBounds(Container.ClientRectangle);
+        controller.DefaultBackgroundColor = Color.Transparent.ToWindowsColor();
+#else
         controller.Bounds = Container.ClientRectangle;
         controller.DefaultBackgroundColor = Color.Transparent;
+#endif
 
         var webview = controller!.CoreWebView2;
 
@@ -288,7 +293,7 @@ internal partial class WebViewCore
                 Controller.IsVisible = true;
             }
 
-            Controller.Bounds = new System.Drawing.Rectangle(0, 0, Container.ClientRectangle.Width, Container.ClientRectangle.Height);
+            Controller.Bounds = new(0, 0, Container.ClientRectangle.Width, Container.ClientRectangle.Height);
         };
 
         WebResourceManager.Initialize(webview);
@@ -370,7 +375,11 @@ internal partial class WebViewCore
         {
             if (_temporaryContainerControl == null) throw new NullReferenceException("Temporary container control is null.");
 
+#if USE_WINRT
+            Controller.SetParentWindow(Container.Handle);
+#else
             Controller.ParentWindow = Container.Handle;
+#endif
 
             _temporaryContainerControl.Dispose();
             _temporaryContainerControl = null;
@@ -395,7 +404,11 @@ internal partial class WebViewCore
         {
             _temporaryContainerControl = new Control();
             _temporaryContainerControl.CreateControl();
+#if USE_WINRT
+            Controller.SetParentWindow(_temporaryContainerControl.Handle);
+#else
             Controller.ParentWindow = _temporaryContainerControl.Handle;
+#endif
         }
     }
 
@@ -468,9 +481,14 @@ internal partial class WebViewCore
         /// <param name="e">A <see cref="CancelEventArgs"/> that contains the event data.</param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            WebView.Controller.ParentWindow = WebView.Container.Handle;
 
+#if USE_WINRT
+            WebView.Controller.SetParentWindow(WebView.Container.Handle);
+            WebView.Controller.SetBounds(WebView.Container.ClientRectangle);
+#else
+            WebView.Controller.ParentWindow = WebView.Container.Handle;
             WebView.Controller.Bounds = WebView.Container.ClientRectangle;
+#endif
 
             WebView.Container.Show();
 
@@ -488,8 +506,13 @@ internal partial class WebViewCore
 
             var screen = Screen.FromHandle(WebView.Container.Handle);
 
+#if USE_WINRT
+            WebView.Controller.SetBounds(ClientRectangle);
+            WebView.Controller.SetParentWindow(Handle);
+#else
             WebView.Controller.Bounds = ClientRectangle;
             WebView.Controller.ParentWindow = Handle;
+#endif
 
             WebView.Browser!.Settings.IsNonClientRegionSupportEnabled = false;
         }
@@ -503,7 +526,11 @@ internal partial class WebViewCore
         {
             base.OnResize(e);
 
+#if USE_WINRT
+            WebView.Controller.SetBounds(ClientRectangle);
+#else
             WebView.Controller.Bounds = ClientRectangle;
+#endif
             WebView.Browser!.Settings.IsNonClientRegionSupportEnabled = _isNonClientRegionSupportEnabled;
         }
 

@@ -54,7 +54,7 @@ public abstract class AppStartup
     /// Can be overridden to add custom scheme registrations.
     /// </summary>
     /// <param name="customSchemeRegistrations">A list to which custom scheme registrations can be added.</param>
-    internal protected virtual void ConfigureSchemeRegistrations(List<CoreWebView2CustomSchemeRegistration> customSchemeRegistrations)
+    internal protected virtual void ConfigureSchemeRegistrations(IList<CoreWebView2CustomSchemeRegistration> customSchemeRegistrations)
     {
     }
 
